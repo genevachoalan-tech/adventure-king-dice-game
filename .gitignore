@@ -1,0 +1,17 @@
+﻿node_modules/
+*.bak
+*.bak_*
+*.py
+_test*
+_patch*
+_chunk*
+_inline*
+*.log
+.DS_Store
+e2e/
+test/
+work/
+_shots/
+_test/
+assets/
+data/
