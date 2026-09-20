@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -4063,7 +4063,7 @@ function renderDMTab(tab){
     let html='<h3 style="color:var(--gold-light);margin-bottom:10px">🧪 测试工具（正式开本请勿使用）</h3>';
     html+='<div style="background:#2a1d12;border:1px solid #5a4a2a;border-radius:6px;padding:10px;margin-bottom:12px">';
     html+='<div style="margin-bottom:6px"><b>房间号：</b><span style="color:var(--gold);font-size:18px;letter-spacing:3px">'+G.roomId+'</span></div>';
-    html+='<div style="margin-bottom:8px"><b>DM密码：</b><span style="color:var(--gold);letter-spacing:4px">••••••</span> <span class="muted" style="font-size:11px">（创建时输入1314520）</span></div>';
+    html+='<div style="margin-bottom:8px"><b>DM密码：</b><span style="color:var(--gold);letter-spacing:4px">••••••</span> <span class="muted" style="font-size:11px"></span></div>';
     html+='<div class="flex-row" style="gap:6px">';
     html+='<button class="gold-btn" id="t-copy" style="flex:1">复制房间号</button>';
     html+='<button class="gold-btn" id="t-open" style="flex:1">打开玩家窗口</button>';
@@ -7599,7 +7599,7 @@ function openDmManagePlayer(pid){
     const uRoom=urlParams.get('room');
     if(uRoom && /^\d{4,7}$/.test(uRoom)){
       $('#join-room-id').value=uRoom;
-      const pw=$('#join-room-pass'); if(pw) pw.value='1314520';
+      
       $('#login-choices').style.display='none'; $('#pane-join').style.display='block';
       setTimeout(()=>{ const b=$('#btn-do-join'); if(b) b.click(); }, 400);
     }
