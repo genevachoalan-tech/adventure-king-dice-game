@@ -2281,14 +2281,18 @@ const Net = {
     this._ensureSocket();
     this._sendJoin(roomId, onConnected);
   },
-  _sendJoin(roomId, onConnected){
+  _sendJoin(roomId, onConnected, _attempt){
     const self=this;
+    const attempt=_attempt||1;
     const sl=(typeof loadLocal==='function')?loadLocal():null;
     const pid=(sl && !sl.isDM && sl.roomId===roomId && sl.pid) ? sl.pid : ('p_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8));
     this._playerId=pid;
     const run=()=>{
       self.socket.emit('join_room',{ gameId:self._gameId, roomNumber:roomId, playerId:pid, nickname:(window.G&&G.myName)||'冒险者', charId:(window.G&&G.myChar)||null },ack=>{
-        if(!ack || !ack.success){ try{ toast((ack&&(ack.error||ack.message))||('加入房间失败：'+roomId)); }catch(e){} return; }
+        if(!ack || !ack.success){
+          if(attempt<3){ try{ toast('加入失败，第'+(attempt+1)+'次重试…'); }catch(e){} setTimeout(()=>self._sendJoin(roomId,onConnected,attempt+1),2000); return; }
+          try{ toast((ack&&(ack.error||ack.message))||('加入房间失败：'+roomId)); }catch(e){} return;
+        }
         self.mode='socket'; self.myId=ack.playerId; self.roomId=ack.roomNumber; self._needRejoin=true; self._joinedOnce=true;
         /* 先让外部完成 onConnected（此时会设置 Net.handler=onPlayerMessage） */
         onConnected && onConnected();
