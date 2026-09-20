@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -2250,7 +2250,7 @@ const Net = {
   _sendCreateRoom(roomId, password, onReady){
     const self=this;
     const run=()=>{
-      self.socket.emit('create_room',{ gameId:self._gameId, password:String(password==null?'':password) },ack=>{
+      self.socket.emit('create_room',{ gameId:self._gameId, password:String(password==null?'':password), roomNumber:roomId },ack=>{
         if(!ack || !ack.success){ try{ toast((ack&&(ack.error||ack.message))||'房间创建失败（密码错误？）'); }catch(e){} return; }
         self.mode='socket'; self.myId=ack.dmPlayerId; self.roomId=ack.roomNumber; self._needRejoin=true; self._joinedOnce=true;
         try{ if(window.G){ G.myId=ack.dmPlayerId; } }catch(e){}
